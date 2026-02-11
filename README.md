@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Barbershop
 
-## Getting Started
+This is a full-stack barbershop booking app built with Next.js.
 
-First, run the development server:
+Customers can book a timeslot by verifying their phone number first.  
+They receive a verification code by SMS, confirm it, then select a time and complete the reservation. After booking, they receive a confirmation SMS.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Everything is handled inside Next.js (App Router).  
+Frontend and backend logic live in the same project using API routes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I used:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- MongoDB to store appointments
+- Redis for temporary data like verification codes and caching
+- An SMS provider to send OTP and confirmation messages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The flow works like this:
 
-## Learn More
+1. User enters phone number  
+2. A verification code is generated and stored in Redis (with expiration)  
+3. Code is sent by SMS  
+4. User submits the code  
+5. If valid, the appointment is saved in MongoDB  
+6. A confirmation SMS is sent  
 
-To learn more about Next.js, take a look at the following resources:
+The main goal was to build a clean booking flow where:
+- No reservation is possible without phone verification
+- Verification codes expire
+- Appointments are properly stored and validated
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project focuses on backend logic, validation, and real-world flow handling rather than UI design.
