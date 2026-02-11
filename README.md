@@ -1,6 +1,6 @@
 # Barbershop
 
-This is a full-stack barbershop booking app built with Next.js.
+This is a barbershop booking web app built with Next.js.
 
 Customers can book a timeslot by verifying their phone number first.  
 They receive a verification code by SMS, confirm it, then select a time and complete the reservation. After booking, they receive a confirmation SMS.
